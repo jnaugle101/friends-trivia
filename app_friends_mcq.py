@@ -1,5 +1,8 @@
 # friends_trivia/app_friends_mcq.py
-import random, math
+import math
+import random
+from pathlib import Path
+
 import streamlit as st
 from question_bank import QUESTIONS
 
@@ -18,12 +21,15 @@ def prepare_round(pool, k, allow_repeats=False):
     out = []
     for i, q in enumerate(base):
         uid = f"q{i}"
-        options = list(q["options"])
-        correct = q["answer"]  # index into options (0..3)
+        options = list(q["options"])          # list of 4 strings
+        correct = q["answer"]                 # index into options (0..3)
+
         order = list(range(len(options)))
         random.shuffle(order)
+
         choices = [options[j] for j in order]
         correct_idx = order.index(correct)
+
         out.append({
             "uid": uid,
             "q": q["q"],
@@ -32,8 +38,41 @@ def prepare_round(pool, k, allow_repeats=False):
             # keep original for review (optional)
             "_orig_options": options,
             "_orig_answer": correct,
+            # pass-through optional per-question images if you add them in the bank
+            "image": q.get("image"),
+            "images": q.get("images"),
         })
     return out
+
+# Build an image pool from /images (your 11 photos)
+# Accepts common image types; works with upper/lower-case file extensions.
+DEFAULT_IMAGE_POOL = [
+    str(p)
+    for p in Path("images").glob("*.*")
+    if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".gif", ".webp"}
+]
+
+def pick_image_for_question(q, uid):
+    """
+    Returns a single path/URL to render for this question.
+    Priority:
+      - q["image"] (single)
+      - random choice from q["images"] (stable by uid)
+      - fallback random from DEFAULT_IMAGE_POOL (stable by uid)
+      - None if nothing found
+    """
+    if q.get("image"):
+        return q["image"]
+
+    if q.get("images"):
+        rng = random.Random(uid)  # stable choice per question
+        return rng.choice(q["images"])
+
+    if DEFAULT_IMAGE_POOL:
+        rng = random.Random(uid)
+        return rng.choice(DEFAULT_IMAGE_POOL)
+
+    return None
 
 # ------------- UI Setup -------------
 st.set_page_config(page_title=APP_LABEL, page_icon="🧠", layout="centered")
@@ -47,6 +86,7 @@ if "idx" not in ss: ss.idx = 0
 if "order" not in ss: ss.order = []         # list of prepared question dicts (with choices & correct_idx)
 if "history" not in ss: ss.history = []     # dicts: {q, choices, chosen_idx, correct_idx, is_correct}
 if "skipped_once" not in ss: ss.skipped_once = set()
+if "images" not in ss: ss.images = {}       # uid -> image path
 
 # ------------- Start Screen -------------
 if not ss.started:
@@ -56,10 +96,9 @@ if not ss.started:
         st.stop()
 
     st.caption(f"{len(pool)} question(s) available in **Friends**.")
-
     allow_repeats = st.checkbox("Allow repeats (sample with replacement)", value=False)
 
-    MAX_BASE = 50
+    MAX_BASE = 70
     max_q = MAX_BASE if allow_repeats else min(MAX_BASE, len(pool))
     num_default = min(10, max_q)
     num_q = st.slider("How many questions?", min_value=5, max_value=max_q, value=num_default, step=1)
@@ -72,7 +111,12 @@ if not ss.started:
         )
 
     if st.button("Start"):
+        # Prepare questions for this round
         ss.order = prepare_round(pool, num_q, allow_repeats=allow_repeats)
+
+        # Pick one image per question (stable during the game)
+        ss.images = {q["uid"]: pick_image_for_question(q, q["uid"]) for q in ss.order}
+
         ss.history = []
         ss.idx = 0
         ss.started = True
@@ -89,6 +133,11 @@ else:
         st.subheader(f"Question {i + 1} of {total}")
         st.write(qobj["q"])
 
+        # Show image if available
+        img = ss.images.get(qobj["uid"])
+        if img:
+            st.image(img, use_column_width=True)
+
         # Build labeled options (A/B/C/D)
         labels = [f"{chr(65 + j)}. {txt}" for j, txt in enumerate(qobj["choices"])]
 
@@ -98,7 +147,7 @@ else:
             "Your choice:",
             options=list(range(len(labels))),
             format_func=lambda j: labels[j],
-            index=None,
+            index=None,  # set to 0 if your Streamlit version doesn't support None
             key=pick_key,
         )
 
@@ -126,6 +175,7 @@ else:
                 ss.order = []
                 ss.history = []
                 ss.skipped_once = set()
+                ss.images = {}
                 st.rerun()
 
         with col3:
@@ -177,4 +227,5 @@ else:
             ss.order = []
             ss.history = []
             ss.skipped_once = set()
+            ss.images = {}
             st.rerun()
