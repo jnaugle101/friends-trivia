@@ -2,6 +2,8 @@
 import math
 import random
 from pathlib import Path
+BASE_DIR = Path(__file__).parent
+DEFAULT_IMAGE_POOL = [str(p) for p in (BASE_DIR / "images").glob("friends*.jpg")]
 
 import streamlit as st
 from question_bank import QUESTIONS
@@ -49,7 +51,7 @@ def prepare_round(pool, k, allow_repeats=False):
 DEFAULT_IMAGE_POOL = [
     str(p)
     for p in Path("images").glob("*.*")
-    if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".gif", ".webp"}
+    if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif"}
 ]
 
 def pick_image_for_question(q, uid):
