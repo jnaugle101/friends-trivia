@@ -194,15 +194,15 @@ add("What ridiculously expensive gift did Ross get Carol when he fell in love wi
 # ---------------------------------------------------------------------
 # Quotes – Who said this?
 # ---------------------------------------------------------------------
-add("“Now imagine you live at the supermarket.”",
+add("“Who said this: Now imagine you live at the supermarket.”",
     ["Chandler", "Ross", "Gunther", "Nora Bing"],
     "Chandler")
 
-add("“And I love refrigerators!”",
+add("“Who said this: And I love refrigerators!”",
     ["Paolo", "Janice", "Joey", "Frank Jr"],
     "Frank Jr")
 
-add("“You will always be the guy who peed on me.”",
+add("“Who said this: You will always be the guy who peed on me.”",
     ["Phoebe", "Monica", "Bonnie", "Susan"],
     "Monica")
 
