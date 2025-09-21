@@ -2,33 +2,72 @@
 import math
 import random
 from pathlib import Path
-BASE_DIR = Path(__file__).parent
-DEFAULT_IMAGE_POOL = [str(p) for p in (BASE_DIR / "images").glob("friends*.jpg")]
 
 import streamlit as st
+from PIL import Image, UnidentifiedImageError
 from question_bank import QUESTIONS
 
 APP_LABEL = "Friends Trivia (Multiple Choice)"
 
-# ------------- Helpers -------------
+# ---------------- Images ----------------
+ALLOWED_SUFFIXES = {".jpg", ".jpeg", ".png", ".gif"}
+IMG_DIR = (Path(__file__).parent / "images").resolve()
+
+def _valid_image(p: Path) -> bool:
+    """Fast integrity check so we don't crash during the game."""
+    try:
+        with Image.open(p) as im:
+            im.verify()
+        return True
+    except Exception:
+        return False
+
+def _scan_image_pool():
+    """Return (valid_paths, invalid_paths) as lists of strings."""
+    valid, invalid = [], []
+    for p in IMG_DIR.glob("*"):
+        if p.is_file() and p.suffix.lower() in ALLOWED_SUFFIXES:
+            if _valid_image(p):
+                valid.append(str(p))
+            else:
+                invalid.append(str(p))
+    return valid, invalid
+
+DEFAULT_IMAGE_POOL, _INVALID_IMAGES = _scan_image_pool()
+
+def pick_image_for_question(q: dict, uid: str):
+    """
+    Choose an image for this question, deterministically by uid:
+      - if q["image"] is set, use it
+      - elif q["images"] is set, pick one deterministically
+      - elif we have a global pool, pick one deterministically
+      - else None
+    """
+    if q.get("image"):
+        return q["image"]
+    if q.get("images"):
+        rng = random.Random(uid)
+        return rng.choice(q["images"])
+    if DEFAULT_IMAGE_POOL:
+        rng = random.Random(uid)
+        return rng.choice(DEFAULT_IMAGE_POOL)
+    return None
+
+# ---------------- Helpers ----------------
 def prepare_round(pool, k, allow_repeats=False):
     """
     Returns a list of question dicts with:
-      - uid
-      - q
-      - choices (shuffled list of 4 options)
-      - correct_idx (index into choices)
+      - uid, q, choices (shuffled), correct_idx
     """
     base = random.choices(pool, k=k) if allow_repeats else random.sample(pool, k=k)
     out = []
     for i, q in enumerate(base):
         uid = f"q{i}"
-        options = list(q["options"])          # list of 4 strings
-        correct = q["answer"]                 # index into options (0..3)
+        options = list(q["options"])
+        correct = q["answer"]  # index into options (0..3)
 
         order = list(range(len(options)))
         random.shuffle(order)
-
         choices = [options[j] for j in order]
         correct_idx = order.index(correct)
 
@@ -37,60 +76,34 @@ def prepare_round(pool, k, allow_repeats=False):
             "q": q["q"],
             "choices": choices,
             "correct_idx": correct_idx,
-            # keep original for review (optional)
-            "_orig_options": options,
-            "_orig_answer": correct,
-            # pass-through optional per-question images if you add them in the bank
+            # carry through optional per-question images if you ever add them
             "image": q.get("image"),
             "images": q.get("images"),
         })
     return out
 
-# Build an image pool from /images (your 11 photos)
-# Accepts common image types; works with upper/lower-case file extensions.
-DEFAULT_IMAGE_POOL = [
-    str(p)
-    for p in Path("images").glob("*.*")
-    if p.suffix.lower() in {".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif"}
-]
-
-def pick_image_for_question(q, uid):
-    """
-    Returns a single path/URL to render for this question.
-    Priority:
-      - q["image"] (single)
-      - random choice from q["images"] (stable by uid)
-      - fallback random from DEFAULT_IMAGE_POOL (stable by uid)
-      - None if nothing found
-    """
-    if q.get("image"):
-        return q["image"]
-
-    if q.get("images"):
-        rng = random.Random(uid)  # stable choice per question
-        return rng.choice(q["images"])
-
-    if DEFAULT_IMAGE_POOL:
-        rng = random.Random(uid)
-        return rng.choice(DEFAULT_IMAGE_POOL)
-
-    return None
-
-# ------------- UI Setup -------------
+# ---------------- UI Setup ----------------
 st.set_page_config(page_title=APP_LABEL, page_icon="🧠", layout="centered")
 st.title(f"🧠 {APP_LABEL}")
 st.caption("Build: 2025-09-21")
 
-# Session state
+# Show a quick image health summary once (start screen only)
+if _INVALID_IMAGES:
+    with st.expander("⚠️ Image health check (click to view)"):
+        st.write(f"Valid images found: **{len(DEFAULT_IMAGE_POOL)}**")
+        st.write(f"Invalid images skipped: **{len(_INVALID_IMAGES)}**")
+        for bad in _INVALID_IMAGES:
+            st.write(f"- {bad}")
+
+# ---------------- Session State ----------------
 ss = st.session_state
 if "started" not in ss: ss.started = False
 if "idx" not in ss: ss.idx = 0
-if "order" not in ss: ss.order = []         # list of prepared question dicts (with choices & correct_idx)
-if "history" not in ss: ss.history = []     # dicts: {q, choices, chosen_idx, correct_idx, is_correct}
+if "order" not in ss: ss.order = []
+if "history" not in ss: ss.history = []
 if "skipped_once" not in ss: ss.skipped_once = set()
-if "images" not in ss: ss.images = {}       # uid -> image path
 
-# ------------- Start Screen -------------
+# ---------------- Start Screen ----------------
 if not ss.started:
     pool = QUESTIONS
     if not pool:
@@ -113,19 +126,14 @@ if not ss.started:
         )
 
     if st.button("Start"):
-        # Prepare questions for this round
         ss.order = prepare_round(pool, num_q, allow_repeats=allow_repeats)
-
-        # Pick one image per question (stable during the game)
-        ss.images = {q["uid"]: pick_image_for_question(q, q["uid"]) for q in ss.order}
-
         ss.history = []
         ss.idx = 0
         ss.started = True
         ss.skipped_once = set()
         st.rerun()
 
-# ------------- Game Flow -------------
+# ---------------- Game Flow ----------------
 else:
     i = ss.idx
     total = len(ss.order)
@@ -135,23 +143,36 @@ else:
         st.subheader(f"Question {i + 1} of {total}")
         st.write(qobj["q"])
 
-        # Show image if available
-        img = ss.images.get(qobj["uid"])
+        # Image (safe)
+        img = pick_image_for_question(qobj, qobj["uid"])
         if img:
-            st.image(img, use_column_width=True)
+            try:
+                st.image(img, use_column_width=True)
+            except UnidentifiedImageError:
+                st.caption("⚠️ Image failed to load; continuing…")
+            except Exception as e:
+                st.caption(f"⚠️ Image error: {e}; continuing…")
 
-        # Build labeled options (A/B/C/D)
+        # Choices (A/B/C/D)
         labels = [f"{chr(65 + j)}. {txt}" for j, txt in enumerate(qobj["choices"])]
 
-        # Radio returns the index we pass in; format_func shows labels
         pick_key = f"pick_{qobj['uid']}"
-        chosen_idx = st.radio(
-            "Your choice:",
-            options=list(range(len(labels))),
-            format_func=lambda j: labels[j],
-            index=None,  # set to 0 if your Streamlit version doesn't support None
-            key=pick_key,
-        )
+        try:
+            chosen_idx = st.radio(
+                "Your choice:",
+                options=list(range(len(labels))),
+                format_func=lambda j: labels[j],
+                index=None,
+                key=pick_key,
+            )
+        except TypeError:
+            chosen_idx = st.radio(
+                "Your choice:",
+                options=list(range(len(labels))),
+                format_func=lambda j: labels[j],
+                index=0,
+                key=pick_key,
+            )
 
         col1, col2, col3 = st.columns(3)
         with col1:
@@ -177,7 +198,6 @@ else:
                 ss.order = []
                 ss.history = []
                 ss.skipped_once = set()
-                ss.images = {}
                 st.rerun()
 
         with col3:
@@ -188,14 +208,12 @@ else:
                 ss.skipped_once.add(moved["uid"])
                 st.rerun()
 
-        # Progress + optional skipped count
         st.progress(i / total if total else 0.0)
         pending_skips = sum(1 for q in ss.order[i:] if q.get("uid") in ss.skipped_once)
         if pending_skips:
             st.caption(f"⏭️ Skipped to revisit: {pending_skips}")
 
     else:
-        # End screen
         right = sum(1 for h in ss.history if h["is_correct"])
         needed = math.ceil(total * 0.70)
         pct = (right / total) * 100 if total else 0.0
@@ -229,5 +247,4 @@ else:
             ss.order = []
             ss.history = []
             ss.skipped_once = set()
-            ss.images = {}
             st.rerun()
