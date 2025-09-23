@@ -15,9 +15,6 @@ def add(q: str, options: list[str], correct: str):
         "answer": options.index(correct),
     })
 
-# ---------------------------------------------------------------------
-# Round 1 – How You Doin’? (Joey)
-# ---------------------------------------------------------------------
 add("Which Stephen King book did Joey hide in his freezer?",
     ["Pet Sematary", "The Shining", "Carrie", "It"],
     "The Shining")
@@ -38,9 +35,6 @@ add("What is the name of Joey’s character in the commercial for opening milk c
     ["Mike", "Tommy", "Kevin", "Drake"],
     "Kevin")
 
-# ---------------------------------------------------------------------
-# Round 2 – We Were on a Break! (Ross)
-# ---------------------------------------------------------------------
 add("What is Ross’ profession?",
     ["Geologist", "Astronomer", "Palaeontologist", "Museum tour guide"],
     "Palaeontologist")
@@ -62,9 +56,7 @@ add("What item does Ross purchase for himself as part of his 1999 New Year’s R
     ["Digital camera", "Arcade machine", "Leather pants", "Wonder-broom"],
     "Leather pants")
 
-# ---------------------------------------------------------------------
-# Round 3 – I’m Hopeless and Awkward and Desperate for Love! (Chandler)
-# ---------------------------------------------------------------------
+
 add("What is Chandler’s middle name?",
     ["Muriel", "Nora", "Charles", "Francis"],
     "Muriel")
@@ -85,9 +77,6 @@ add("What does Chandler have to do to get Joey to forgive him, after kissing Cat
     ["Wear blue lipstick", "Lie in a wooden box for six hours", "Furnish their apartment", "Move to Yemen"],
     "Lie in a wooden box for six hours")
 
-# ---------------------------------------------------------------------
-# Round 4 – I Wasn’t Supposed to Put Beef in the Trifle! (Rachel)
-# ---------------------------------------------------------------------
 add("What film character did Rachel dress up as to fulfil Ross’ fantasy?",
     ["Princess Leia", "Supergirl", "Little Bo Peep", "Cat Woman"],
     "Princess Leia")
@@ -135,9 +124,6 @@ add("Which city did Phoebe’s boyfriend, David, move to?",
     ["Tulsa", "Yemen", "London", "Minsk"],
     "Minsk")
 
-# ---------------------------------------------------------------------
-# Round 6 – I Am So Good at Lightning Rounds! (Monica)
-# ---------------------------------------------------------------------
 add("Who was Monica’s first kiss ever?",
     ["Chandler", "Pete", "Richard", "Ross"],
     "Ross")
@@ -158,9 +144,6 @@ add("How much did Pete Becker tip Monica at the diner where she worked?",
     ["$10", "$300", "$20,000", "Nothing"],
     "$20,000")
 
-# ---------------------------------------------------------------------
-# General knowledge (Friends)
-# ---------------------------------------------------------------------
 add("What is the ‘Gellar Cup’ made of?",
     ["A 3D woman coming out of a photo frame",
      "A troll doll nailed to a two by four",
@@ -191,9 +174,6 @@ add("What ridiculously expensive gift did Ross get Carol when he fell in love wi
      "An early edition of her favourite book", "A $500 dollar watch"],
     "A crystal duck")
 
-# ---------------------------------------------------------------------
-# Quotes – Who said this?
-# ---------------------------------------------------------------------
 add("“Who said this: Now imagine you live at the supermarket.”",
     ["Chandler", "Ross", "Gunther", "Nora Bing"],
     "Chandler")
@@ -206,9 +186,6 @@ add("“Who said this: You will always be the guy who peed on me.”",
     ["Phoebe", "Monica", "Bonnie", "Susan"],
     "Monica")
 
-# =====================================================================
-# Friends Quiz – Round 1: Multiple Choice (with provided answer key)
-# =====================================================================
 add("Which city is the series Friends set in?",
     ["Los Angeles", "New York City", "Miami", "Seattle"],
     "New York City")
@@ -310,9 +287,6 @@ add("Monica and Chandler met on Thanksgiving in 1987. She pursued being a chef b
     ["Green bean casserole", "Meatloaf", "Stuffing", "Macaroni and cheese"],
     "Macaroni and cheese")
 
-# =====================================================================
-# Extras converted from your loose list
-# =====================================================================
 add("What is the name of the coffee shop the friends always visit?",
     ["Central Perk", "The Moondance Diner", "Perk Central", "Café Nervosa"],
     "Central Perk")
@@ -368,10 +342,6 @@ add("What was Monica’s high school nickname?",
 add("What is the name of Joey’s stuffed penguin?",
     ["Hugsy", "Waddle", "Mr. Flippers", "Pengu"],
     "Hugsy")
-
-# ---------------------------------------------------------------------
-# More Friends MCQs (added batch)
-# ---------------------------------------------------------------------
 
 add("Who puts his head in a turkey on Thanksgiving?",
     ["Joey", "Chandler", "Ross", "Gunther"],
@@ -685,3 +655,282 @@ add("What was Ross's fiancée Emily's last name?",
     ["Waltham", "Green", "Geller", "Hannigan"],
     "Waltham")
 
+add("What instrument does Phoebe play?",
+    ["Drums", "Piano", "Guitar", "Flute"],
+    "Guitar")
+
+add("What hangs on the back of the door in Monica’s apartment?",
+    ["Yellow picture frame", "Coat rack", "Wreath", "Mirror"],
+    "Yellow picture frame")
+
+add("Which two characters were friends in high school?",
+    ["Ross and Chandler", "Monica and Rachel", "Joey and Chandler", "Phoebe and Rachel"],
+    "Monica and Rachel")
+
+add("In the pilot, who was Rachel supposed to marry?",
+    ["Barry", "Joshua", "Paolo", "Tag"],
+    "Barry")
+
+add("Which one of Phoebe’s songs gets turned into a music video?",
+    ["Sticky Shoes", "Smelly Cat", "Two of Them Kissed Last Night", "Little Black Curly Hair"],
+    "Smelly Cat")
+
+add("What is Phoebe Buffay’s birth mother’s first name?",
+    ["Lily", "Phoebe", "Frances", "Alice"],
+    "Phoebe")
+
+add("What’s inside the secret closet in Monica’s apartment?",
+    ["Cleaning supplies", "Junk", "Shoes", "Holiday decorations"],
+    "Junk")
+
+add("Which friend was mugged when they were younger?",
+    ["Chandler", "Ross", "Joey", "Monica"],
+    "Ross")
+
+add("What is Joey’s profession?",
+    ["Actor", "Chef", "Waiter", "Boxer"],
+    "Actor")
+
+add("Who was Ross’s best friend in college?",
+    ["Chandler", "Joey", "Gunther", "Mark"],
+    "Chandler")
+
+add("What nickname does Monica’s dad give her?",
+    ["Little Harmonica", "Big Fat Goalie", "Mon", "Monana"],
+    "Little Harmonica")
+
+add("Which friends eat cheesecake off the hallway floor?",
+    ["Monica and Phoebe", "Chandler and Rachel", "Ross and Rachel", "Joey and Chandler"],
+    "Chandler and Rachel")
+
+add("When Joey’s fridge breaks, what does he do?",
+    ["Buys a new one", "Asks Chandler to pay", "Eats all the food", "Calls the super"],
+    "Eats all the food")
+
+add("Which friend accidentally falls for Joey’s girlfriend Kathy?",
+    ["Ross", "Chandler", "Monica", "Phoebe"],
+    "Chandler")
+
+add("What is Chandler’s father’s job?",
+    ["Drag queen in Vegas", "Chef", "Magician", "Limo driver"],
+    "Drag queen in Vegas")
+
+add("Who does Bruce Willis play on Friends?",
+    ["Paul Stevens", "Tag Jones", "Joshua Burgin", "Pete Becker"],
+    "Paul Stevens")
+
+add("At his wedding to Emily, what name does Ross say?",
+    ["Rachel", "Emily", "Carol", "Susan"],
+    "Rachel")
+
+add("In Barbados, who wins the ping-pong game against Monica?",
+    ["Mike", "Chandler", "Joey", "Ross"],
+    "Mike")
+
+add("Who did Phoebe think her grandfather was?",
+    ["Albert Einstein", "Walt Disney", "Winston Churchill", "Isaac Newton"],
+    "Albert Einstein")
+
+add("Which show do Chandler and Joey bond over when they first move in together?",
+    ["Baywatch", "Knight Rider", "MacGyver", "Seinfeld"],
+    "Baywatch")
+
+add("Which one of the friends dates Rachel’s boss at Bloomingdale’s?",
+    ["Chandler", "Ross", "Joey", "Monica"],
+    "Chandler")
+
+add("What color are the kitchen cabinets in Monica’s apartment?",
+    ["Blue", "Yellow", "Green", "White"],
+    "Blue")
+
+add("What was the name of Rachel’s assistant at Ralph Lauren, who she ends up dating?",
+    ["Tag", "Mark", "Gavin", "Joshua"],
+    "Tag")
+
+add("Where are Monica and Ross performing their 8th-grade dance routine?",
+    ["Dick Clark’s New Year’s Rockin’ Eve", "A school talent show", "Times Square", "MTV Spring Break"],
+    "Dick Clark’s New Year’s Rockin’ Eve")
+
+add("According to Phoebe, someone dies every time she goes to the…?",
+    ["Dentist", "Post office", "Bank", "DMV"],
+    "Dentist")
+
+add("What is on the door at Chandler and Joey’s apartment?",
+    ["A Magna Doodle", "A dartboard", "A framed peephole", "A poster"],
+    "A Magna Doodle")
+
+add("Where does Monica lose a fingernail?",
+    ["In a quiche", "In Rachel’s trifle", "In a pizza", "In a cheesecake"],
+    "In a quiche")
+
+add("Who puts on his résumé that he can drink a gallon of milk in under 10 seconds?",
+    ["Joey", "Chandler", "Ross", "Mike"],
+    "Joey")
+
+add("What movie does Rachel claim is her favorite?",
+    ["Dangerous Liaisons", "The English Patient", "Pretty Woman", "Scent of a Woman"],
+    "Dangerous Liaisons")
+
+add("What is actually Rachel’s favorite movie?",
+    ["Weekend at Bernie's", "Die Hard", "Risky Business", "Grease"],
+    "Weekend at Bernie's")
+
+add("In 'The One with the Ball', which friend never touches the ball?",
+    ["Rachel", "Phoebe", "Monica", "Chandler"],
+    "Rachel")
+
+add("Why does Phoebe hate PBS?",
+    ["They ignored her letter to Sesame Street", "They canceled her favorite show", "They showed violent cartoons", "They fired her friend"],
+    "They ignored her letter to Sesame Street")
+
+add("What is the superintendent’s name who almost evicts Monica and Rachel?",
+    ["Mr. Treeger", "Mr. Heckles", "Mr. Leonard", "Mr. Zelner"],
+    "Mr. Treeger")
+
+add("What game do the friends play at the beach house?",
+    ["Strip Happy Days", "Strip Poker", "Charades", "Twister"],
+    "Strip Happy Days")
+
+add("Why is Ross suspended from the museum for a month?",
+    ["He yelled about his stolen sandwich", "He broke a display", "He missed deadlines", "He insulted a donor"],
+    "He yelled about his stolen sandwich")
+
+add("Who says, 'Could I BE wearing any more clothes?'",
+    ["Joey", "Chandler", "Ross", "Rachel"],
+    "Joey")
+
+add("Who does Chandler get stuck with in the ATM vestibule?",
+    ["Jill Goodacre", "Janice", "Julia Roberts", "Elle Macpherson"],
+    "Jill Goodacre")
+
+add("Which friend gives birth to triplets?",
+    ["Phoebe", "Rachel", "Monica", "Carol"],
+    "Phoebe")
+
+add("According to Monica, how many erogenous zones are there?",
+    ["7", "5", "9", "11"],
+    "7")
+
+add("Why does Phoebe break up with Gary, the cop?",
+    ["He shot a bird", "He moved to Minsk", "He lied about being a cop", "He cheated"],
+    "He shot a bird")
+
+add("What self-defense 'technique' does Ross try to teach?",
+    ["Unagi", "Karate", "Shaka", "Mushu"],
+    "Unagi")
+
+add("What is the name of the paleontologist that both Ross and Joey date?",
+    ["Charlie", "Julie", "Emily", "Elizabeth"],
+    "Charlie")
+
+add("Chandler dumps Janice on which two holidays?",
+    ["New Year's Eve and Valentine's Day", "Christmas and Thanksgiving", "Halloween and Christmas", "Fourth of July and Labor Day"],
+    "New Year's Eve and Valentine's Day")
+
+add("What color was the sweater that helped reveal the father of Rachel’s baby?",
+    ["Red", "Blue", "Black", "Green"],
+    "Red")
+
+add("Who is the father of Rachel’s baby?",
+    ["Ross", "Tag", "Gavin", "Paolo"],
+    "Ross")
+
+add("Who is pregnant at Monica and Chandler’s wedding?",
+    ["Rachel", "Phoebe", "Monica", "Janice"],
+    "Rachel")
+
+add("Who tells Rachel there’s something wrong with the left phalange on the plane?",
+    ["Phoebe", "Chandler", "Monica", "Gunther"],
+    "Phoebe")
+
+add("At the end of the series, where is Rachel about to fly?",
+    ["Paris", "London", "Los Angeles", "Rome"],
+    "Paris")
+
+add("Who becomes Monica and Chandler’s neighbor in their new house?",
+    ["Janice", "Gunther", "Mr. Treeger", "Richard"],
+    "Janice")
+
+add("Which famous fashion designer cameoed as himself?",
+    ["Ralph Lauren", "Tom Ford", "Calvin Klein", "Giorgio Armani"],
+    "Ralph Lauren")
+
+add("Who does Ben Stiller date in his guest appearance?",
+    ["Rachel", "Monica", "Phoebe", "Janice"],
+    "Rachel")
+
+add("The white ceramic dog in the apartment originally belonged to which cast member?",
+    ["Jennifer Aniston", "Lisa Kudrow", "Matt LeBlanc", "David Schwimmer"],
+    "Jennifer Aniston")
+
+add("Who was the youngest main cast member when the show began?",
+    ["Matthew Perry", "Jennifer Aniston", "Matt LeBlanc", "David Schwimmer"],
+    "Matthew Perry")
+
+add("Before renumbering, what was Monica and Rachel’s apartment number?",
+    ["4", "20", "19", "7"],
+    "4")
+
+add("Before renumbering, what was Chandler and Joey’s apartment number?",
+    ["5", "19", "20", "7"],
+    "5")
+
+add("What was the Matt LeBlanc spin-off called?",
+    ["Joey", "Friends Again", "How You Doin'", "Central Perk"],
+    "Joey")
+
+add("Who plays Monica Geller?",
+    ["Courteney Cox", "Jennifer Aniston", "Lisa Kudrow", "Meg Ryan"],
+    "Courteney Cox")
+
+add("According to Phoebe, Ross and Rachel are each other’s…?",
+    ["Lobsters", "Halves", "Penguins", "Monkeys"],
+    "Lobsters")
+
+add("Which character owns a pet monkey?",
+    ["Ross", "Joey", "Chandler", "Phoebe"],
+    "Ross")
+
+add("On what game show did Joey appear as a contestant?",
+    ["Pyramid", "Jeopardy!", "Wheel of Fortune", "The Price Is Right"],
+    "Pyramid")
+
+add("What color is the couch in Central Perk?",
+    ["Orange", "Brown", "Red", "Green"],
+    "Orange")
+
+add("What is the 'Joey Special'?",
+    ["Two pizzas", "Extra anchovies", "A meatball sub", "Cheesecake for two"],
+    "Two pizzas")
+
+add("Which main cast member never hosted Saturday Night Live during Friends’ run?",
+    ["Matt LeBlanc", "Jennifer Aniston", "Lisa Kudrow", "David Schwimmer"],
+    "Matt LeBlanc")
+
+add("What entertainer is Chandler irrationally afraid of?",
+    ["Michael Flatley", "Carrot Top", "David Copperfield", "Weird Al"],
+    "Michael Flatley")
+
+add("Which character once got a pencil stuck in their ear?",
+    ["Monica", "Joey", "Chandler", "Ross"],
+    "Monica")
+
+add("What musical does Joey star in during Season 1?",
+    ["Freud!", "Macbeth", "Cats", "Oklahoma!"],
+    "Freud!")
+
+add("Who first professes love to Rachel in the finale (not Ross)?",
+    ["Gunther", "Chandler", "Joey", "Tag"],
+    "Gunther")
+
+add("What do all six friends do before leaving the apartment in the finale?",
+    ["Put their keys on the counter", "Take one last photo", "Order coffee", "Sing the theme song"],
+    "Put their keys on the counter")
+
+add("Chandler accidentally agrees to move for work to which city?",
+    ["Tulsa, Oklahoma", "Dallas, Texas", "Topeka, Kansas", "Omaha, Nebraska"],
+    "Tulsa, Oklahoma")
+
+add("What happens to Marcel after Ross gives him away?",
+    ["He becomes a movie star", "He runs away", "He returns to the zoo permanently", "He moves to Chicago"],
+    "He becomes a movie star")

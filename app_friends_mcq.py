@@ -220,7 +220,7 @@ else:
 
         st.success(f"Game over! Your score: **{right}/{total}** ({pct:.2f}%)")
         if right >= needed:
-            st.info("🌟 Nice work!")
+            st.info("🌟 Nice Job! You seem to be some kind of Friend's Expert! You should go on Jeopardy with those skills!")
         else:
             st.warning(f"😬 You needed at least **{needed}/{total}** (70%).")
 
